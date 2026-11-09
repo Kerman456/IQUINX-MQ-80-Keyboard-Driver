@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IQUNIX MQ80 · VIA 驱动</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="logo">MQ</span>
+          <div class="brand-text">
+            <b>IQUNIX MQ80</b>
+            <i>VIA 桌面驱动</i>
+          </div>
+        </div>
+        <div class="device-chip" id="deviceChip">未连接</div>
+        <div class="actions">
+          <button class="btn" id="btnConnect">连接键盘</button>
+          <button class="btn ghost" id="btnDemo">演示模式</button>
+          <button class="btn ghost" id="btnDisconnect">断开</button>
+        </div>
+      </header>
+
+      <nav class="sidenav">
+        <button data-tab="keymap" class="is-active">键位映射</button>
+        <button data-tab="lighting">灯光</button>
+        <button data-tab="macro">宏</button>
+        <button data-tab="device">设备</button>
+        <button data-tab="about">关于</button>
+      </nav>
+
+      <main class="content">
+        <section data-pane="keymap" class="keymap-pane">
+          <div class="toolbar" id="layerBar"></div>
+          <div class="keymap-layout">
+            <div class="board-wrap">
+              <div id="boardHost"></div>
+            </div>
+            <div class="editor-slot" id="editorHost"></div>
+          </div>
+          <p class="hint">
+            点击键位在右侧修改键码，改动会立即写入键盘并自动保存；
+            需要一次改多个键时，先在工具栏打开「多选」。
+          </p>
+        </section>
+
+        <section data-pane="lighting" hidden>
+          <div id="lightingHost"></div>
+        </section>
+
+        <section data-pane="macro" hidden>
+          <div id="macroHost"></div>
+        </section>
+
+        <section data-pane="device" hidden>
+          <div id="deviceHost"></div>
+          <section class="card">
+            <h3>运行日志</h3>
+            <div class="card-body">
+              <ul class="log" id="logList"></ul>
+            </div>
+          </section>
+        </section>
+
+        <section data-pane="about" hidden>
+          <section class="card">
+            <h3>关于</h3>
+            <div class="card-body prose">
+              <p>
+                这是一个为 <b>IQUNIX MQ80</b>（VID <code>0x320F</code> / PID <code>0x5055</code>）
+                编写的小型 VIA 兼容驱动，参考了
+                <a href="https://github.com/the-via/app" target="_blank" rel="noreferrer">the-via/app</a>
+                与
+                <a href="https://github.com/cebby2420/via-desktop" target="_blank" rel="noreferrer">cebby2420/via-desktop</a>
+                的实现方式。
+              </p>
+              <ul>
+                <li>通过 WebHID 直接与键盘的 raw HID 接口（usage page <code>0xFF60</code>）通信，无需额外驱动。</li>
+                <li>支持多图层改键、灯光菜单、宏编辑，以及恢复出厂与进入 Bootloader。</li>
+                <li>「演示模式」使用内存模拟设备，未插键盘也能体验完整界面。</li>
+                <li>键码表按 VIA 协议版本自动选择（v9 / v10 / v11 / v12 / v13）。</li>
+              </ul>
+              <p class="muted">
+                浏览器模式需要 Chrome / Edge（WebHID）。桌面版通过 Electron 封装，可离线使用。
+              </p>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <div class="toast" id="toast"></div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

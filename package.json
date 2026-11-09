@@ -1,0 +1,64 @@
+{
+  "name": "iqunix-mq80-via-driver",
+  "version": "1.2.0",
+  "description": "IQUNIX MQ80 (VID 0x320F / PID 0x5055) 的 VIA 兼容驱动 —— 键位映射 / 灯光 / 宏编辑 / 设备维护。参考 the-via/app 与 cebby2420/via-desktop。",
+  "main": "electron/main.js",
+  "private": true,
+  "author": "IQUNIX MQ80 VIA Driver",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "web": "node server.js",
+    "web:port": "node server.js 5173",
+    "test": "node tools/test-driver.mjs",
+    "test:ui": "node tools/ui-test.mjs",
+    "extract-firmware": "node tools/extract-firmware.mjs",
+    "dist": "electron-builder --win",
+    "dist:installer": "electron-builder --win nsis",
+    "dist:portable": "electron-builder --win portable",
+    "dist:dir": "electron-builder --win --dir"
+  },
+  "keywords": ["iqunix", "mq80", "via", "qmk", "webhid", "keyboard", "macro", "rgb"],
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.iqunix.mq80.via",
+    "productName": "IQUNIX MQ80 VIA",
+    "copyright": "MIT Licensed",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "app/**/*",
+      "electron/**/*",
+      "package.json",
+      "!**/*.map",
+      "!tools/**/*",
+      "!docs/**/*"
+    ],
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ],
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "IQUNIX MQ80 VIA",
+      "deleteAppDataOnUninstall": false
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+out/
+*.log
+
+# vendor firmware installer (proprietary, not redistributable)
+MQ80-CS9041-*.exe/
+*.exe
+
+# tooling / editor
+.workbuddy/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.tar
+*.zip
+
+# transient test artefacts
+.shots/
